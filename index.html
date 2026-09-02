@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biểu Đồ Giá Vàng Bạc Trực Tuyến - Cập nhật 24/7 | GoldSilver247</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Site Navigation -->
+    <nav class="site-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logo.png" alt="Logo" class="logo-icon"> GoldSilver247
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Trang chủ</a></li>
+                <li><a href="#gold-chart-section">Giá Vàng</a></li>
+                <li><a href="#silver-chart-section">Giá Bạc</a></li>
+                <li><a href="https://www.crfnetwork.com/" target="_blank" class="nav-btn">Về CRF Network</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="app-container">
+            <header class="header">
+                <h1>Biểu Đồ Giá Vàng & Giá Bạc Việt Nam</h1>
+            </header>
+            
+            <!-- Stat Cards -->
+            <div class="stat-cards">
+                <div class="stat-card color-sjc">
+                    <div class="stat-title">Giá Vàng VN (Lượng)</div>
+                    <div class="stat-value" id="stat-gold-vn-val">Đang tải...</div>
+                    <div class="stat-change" id="stat-gold-vn-change">--</div>
+                </div>
+                <div class="stat-card color-world">
+                    <div class="stat-title">Giá Vàng TG (Lượng)</div>
+                    <div class="stat-value" id="stat-gold-world-val">Đang tải...</div>
+                    <div class="stat-change" id="stat-gold-world-change">--</div>
+                </div>
+                <div class="stat-card color-silver">
+                    <div class="stat-title">Giá Bạc VN (Lượng)</div>
+                    <div class="stat-value" id="stat-silver-vn-val">Đang tải...</div>
+                    <div class="stat-change" id="stat-silver-vn-change">--</div>
+                </div>
+                <div class="stat-card color-silver">
+                    <div class="stat-title">Giá Bạc TG (Lượng)</div>
+                    <div class="stat-value" id="stat-silver-world-val">Đang tải...</div>
+                    <div class="stat-change" id="stat-silver-world-change">--</div>
+                </div>
+            </div>
+            
+            <div class="controls-container">
+                <div class="time-filters" id="time-filters">
+                    <button class="filter-btn" data-days="6h">6H</button>
+                    <button class="filter-btn" data-days="1d">1D</button>
+                    <button class="filter-btn" data-days="7d">7D</button>
+                    <button class="filter-btn" data-days="1m">1M</button>
+                    <button class="filter-btn active" data-days="3m">3M</button>
+                    <button class="filter-btn" data-days="6m">6M</button>
+                    <button class="filter-btn" data-days="1y">1Y</button>
+                    <button class="filter-btn" data-days="3y">3Y</button>
+                </div>
+                
+                <div class="filters-group" id="unit-filters">
+                    <button class="filter-btn active" data-unit="VND">Giá (VND)</button>
+                    <button class="filter-btn" data-unit="%">Biến động (%)</button>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <!-- Gold Chart -->
+                <div class="chart-wrapper" id="gold-chart-section">
+                    <h3 class="chart-title">BIẾN ĐỘNG GIÁ VÀNG</h3>
+                    <div class="chart-subtitle" id="chart-date-range-gold">Biểu đồ thời gian thực | GMT+7</div>
+                    <div class="chart-stats-header">
+                        <div class="stat-minmax">
+                            <div class="stat-minmax-label">THẤP NHẤT</div>
+                            <div class="stat-minmax-value" id="min-gold">--</div>
+                        </div>
+                        <div class="stat-minmax">
+                            <div class="stat-minmax-label">CAO NHẤT</div>
+                            <div class="stat-minmax-value" id="max-gold">--</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="goldChart"></canvas>
+                    </div>
+                    <div class="legend-panel" id="custom-legend-gold">
+                        <div class="legend-date" id="legend-date-gold">Đang tải...</div>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: var(--color-mieng);"></span>
+                                <span class="legend-label">Vàng miếng :</span>
+                                <span class="legend-value" id="val-mieng">...</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: var(--color-nhan);"></span>
+                                <span class="legend-label">Vàng nhẫn :</span>
+                                <span class="legend-value" id="val-nhan">...</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: var(--color-trangsuc);"></span>
+                                <span class="legend-label">Vàng trang sức :</span>
+                                <span class="legend-value" id="val-trangsuc">...</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: var(--color-thegioi);"></span>
+                                <span class="legend-label">Vàng thế giới :</span>
+                                <span class="legend-value" id="val-thegioi">...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Silver Chart -->
+                <div class="chart-wrapper" id="silver-chart-section">
+                    <h3 class="chart-title">BIẾN ĐỘNG GIÁ BẠC</h3>
+                    <div class="chart-subtitle" id="chart-date-range-silver">Biểu đồ thời gian thực | GMT+7</div>
+                    <div class="chart-stats-header">
+                        <div class="stat-minmax">
+                            <div class="stat-minmax-label">THẤP NHẤT</div>
+                            <div class="stat-minmax-value" id="min-silver">--</div>
+                        </div>
+                        <div class="stat-minmax">
+                            <div class="stat-minmax-label">CAO NHẤT</div>
+                            <div class="stat-minmax-value" id="max-silver">--</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="silverChart"></canvas>
+                    </div>
+                    <div class="legend-panel" id="custom-legend-silver">
+                        <div class="legend-date" id="legend-date-silver">Đang tải...</div>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: var(--color-bac);"></span>
+                                <span class="legend-label">Giá Bạc :</span>
+                                <span class="legend-value" id="val-silver">...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="loading-overlay" id="loading">
+                <div class="spinner"></div>
+                <p>Đang tải dữ liệu...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- API Info Modal -->
+    <div class="modal-overlay" id="api-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nguồn Cung Cấp Dữ Liệu</h2>
+                <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Giá Vàng:</strong> Dữ liệu được cung cấp bởi <code>vang.today</code> (bao gồm SJC, DOJI, PNJ, Vàng thế giới).</p>
+                <p><strong>Giá Bạc VN:</strong> Dữ liệu lịch sử và hiện tại được trích xuất từ API của <code>HanaGold</code>.</p>
+                <p><strong>Giá Bạc Thế Giới:</strong> Quy đổi ước tính dựa trên tỷ lệ Vàng/Bạc quốc tế.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="logo">
+                    <img src="logo.png" alt="Logo" class="logo-icon"> GoldSilver247
+                </div>
+                <p>Nền tảng theo dõi giá vàng và giá bạc trực tuyến nhanh và mượt mà nhất.</p>
+            </div>
+            <div class="footer-right">
+                <p><strong>Developed by:</strong> <a href="https://github.com/lucthienphong1120/" target="_blank">LTP (Lục Thiên Phong)</a></p>
+                <p><strong>Powered by:</strong> <a href="https://www.crfnetwork.com/" target="_blank">CRF Network</a></p>
+                <button class="api-info-btn" id="open-modal">ℹ️ Nguồn Dữ Liệu</button>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 GoldSilver247. All rights reserved.
+        </div>
+    </footer>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
