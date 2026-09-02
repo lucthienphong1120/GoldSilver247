@@ -58,9 +58,10 @@ body {
 }
 
 .logo-icon {
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
+    border-radius: 8px;
 }
 
 .nav-links {
